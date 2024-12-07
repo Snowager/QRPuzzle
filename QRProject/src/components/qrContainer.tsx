@@ -13,7 +13,7 @@ interface qrProps {
 
 export default function QRContainer({cellWidth, cellHeight, cellAmountWidth, cellAmountHeight}: qrProps): ReactElement<PropsWithChildren> {
 
-    //const [count, setCount]: [number, Dispatch<number>] = useState(0)
+    const [saveToggle, setSaveToggle]: [boolean, Dispatch<boolean>] = useState(false)
     const [cellList, setCellList]: [number[], Dispatch<SetStateAction<number[]>>]= useState<number[]>([])
 
     useEffect(() => {
@@ -29,14 +29,21 @@ export default function QRContainer({cellWidth, cellHeight, cellAmountWidth, cel
 
     const QRui = useMemo(() => {
         return (
-            <div style={{display: 'flex', flexWrap: 'wrap', alignItems: 'flex-start', flexDirection: 'row', width: cellWidth*cellAmountWidth, height: 'auto'
-            }}>
-                {cellList.length > 1 && cellList.map((cell) => {
-                    return (
-                    <QRCell cellWidth={cellWidth} cellHeight={cellHeight} toggleState={cell === 0 ? false : true}/>)})}
+            <div>
+                <div style={{display: 'flex', flexWrap: 'wrap', alignItems: 'flex-start', flexDirection: 'row', width: cellWidth*cellAmountWidth, height: 'auto'
+                }}>
+                    {cellList.length > 1 && cellList.map((cell) => {
+                        return (
+                        <QRCell cellWidth={cellWidth} cellHeight={cellHeight} toggleState={cell === 0 ? false : true}/>)})}
+                </div>
+                <p>Click here to toggle QR save data</p>
+                <button onClick={() => {
+                    setSaveToggle(!saveToggle)
+                }}>Toggle</button>
+                {saveToggle && <div style={{width: cellWidth*cellAmountWidth}}><p style={{wordWrap: 'break-word'}}>{JSON.stringify(cellList)}</p></div>}
             </div>
         )
-    }, [cellList, cellWidth, cellHeight, cellAmountWidth])
+    }, [cellList, cellWidth, cellHeight, cellAmountWidth, saveToggle])
     return (
     <>{QRui}</>
     )
