@@ -1,5 +1,7 @@
 import { Dispatch, PropsWithChildren, ReactElement, SetStateAction, useEffect, useMemo, useState } from "react";
 import QRCell from "./qrCell";
+import { v4 as uuid } from "uuid";
+
 
 interface qrProps {
     containerWidth?: number | string,
@@ -11,21 +13,37 @@ interface qrProps {
     cellAmountHeight: number,
 }
 
+export interface cellType {
+    value: number,
+    index: number,
+    id: string,
+}
+
+export interface cellOptions {
+    cellList: cellType[],
+    setCellList: Dispatch<SetStateAction<cellType[]>>,
+}
+
 export default function QRContainer({cellWidth, cellHeight, cellAmountWidth, cellAmountHeight}: qrProps): ReactElement<PropsWithChildren> {
 
     const [saveToggle, setSaveToggle]: [boolean, Dispatch<boolean>] = useState(false)
-    const [cellList, setCellList]: [number[], Dispatch<SetStateAction<number[]>>]= useState<number[]>([])
+    const [cellList, setCellList]: [cellType[], Dispatch<SetStateAction<cellType[]>>]= useState<cellType[]>(localStorage.getItem("qrContainer") ? JSON.parse(localStorage.getItem("qrContainer") || "") : [])
 
     useEffect(() => {
-    const tempList: number[] = [];
+    const tempList: cellType[]  = [];
     while(tempList.length < 1) {
         for (let x = 0; x < cellAmountWidth*cellAmountHeight; x++) {
-        const x = Math.floor(Math.random()*2)
-        tempList.push(x)
+        const num = Math.floor(Math.random()*2)
+        tempList.push({value:num, id:uuid(), index:x})
         }
-        setCellList(tempList);
+        if (cellList.length === 0) setCellList(tempList);
     }
     },[])
+
+    useEffect(() => {
+        console.log(JSON.stringify(cellList))
+        localStorage.setItem("qrContainer", JSON.stringify(cellList))
+    }, [cellList])
 
     const QRui = useMemo(() => {
         return (
@@ -34,13 +52,22 @@ export default function QRContainer({cellWidth, cellHeight, cellAmountWidth, cel
                 }}>
                     {cellList.length > 1 && cellList.map((cell) => {
                         return (
-                        <QRCell cellWidth={cellWidth} cellHeight={cellHeight} toggleState={cell === 0 ? false : true}/>)})}
+                        <QRCell 
+                            key={cell.index} 
+                            cellWidth={cellWidth} 
+                            cellHeight={cellHeight} 
+                            toggleState={cell.value === 0 ? false : true} 
+                            cellHandling={{cellList, setCellList}}
+                            cell={cell}
+                        />
+                            )})}
                 </div>
                 <p>Click here to toggle QR save data</p>
                 <button onClick={() => {
                     setSaveToggle(!saveToggle)
                 }}>Toggle</button>
-                {saveToggle && <div style={{width: cellWidth*cellAmountWidth}}><p style={{wordWrap: 'break-word'}}>{JSON.stringify(cellList)}</p></div>}
+                <button onClick={() => localStorage.clear()}>Clear Data</button>
+                {saveToggle && <div style={{width: cellWidth*cellAmountWidth}}><p style={{wordWrap: 'break-word'}}>{JSON.stringify(cellList, ["value"])}</p></div>}
             </div>
         )
     }, [cellList, cellWidth, cellHeight, cellAmountWidth, saveToggle])

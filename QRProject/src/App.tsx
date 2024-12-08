@@ -9,7 +9,7 @@ function App() {
     return (
       <>
         <div style={{display: 'flex', flexDirection: 'column', justifyContent: 'center'}}>
-          <QRContainer cellWidth={20} cellHeight={20} cellAmountWidth={29} cellAmountHeight={29}/>
+          <QRContainer cellWidth={20} cellHeight={20} cellAmountWidth={6} cellAmountHeight={6}/>
         </div> 
       </>
     )

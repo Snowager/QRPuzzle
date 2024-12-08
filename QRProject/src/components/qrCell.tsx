@@ -1,19 +1,33 @@
-import { useState, useMemo } from "react";
+import { useState, useMemo, } from "react";
+import { cellOptions, cellType } from "./qrContainer";
 
 interface QRCellProps {
     toggleState: boolean,
     cellWidth: number,
     cellHeight: number,
+    cellHandling: cellOptions
+    cell: cellType
 }
 
-export default function QRCell({toggleState, cellWidth, cellHeight}: QRCellProps) {
+export default function QRCell({toggleState, cellWidth, cellHeight, cellHandling, cell}: QRCellProps) {
     const [toggle, setToggle] = useState(toggleState)
 
     const cellUi = useMemo(() => {
+
+        const handleClick = (): void => {
+            setToggle(!toggle)
+            const newList: cellType[] = [...cellHandling.cellList]
+            const cellChange: cellType = {...cellHandling.cellList[cell.index]}
+            cellChange.value = toggle ? 0:1;
+            newList[cell.index] = cellChange;
+            cellHandling.setCellList(newList);
+            localStorage.setItem("qrContainer", JSON.stringify(newList))
+        }
+
         return (
-            <div style={{width: cellWidth, height: cellHeight, ...toggle ? styles.filled : styles.empty}} onClick={() => {setToggle(!toggle)}}></div>
+            <div style={{width: cellWidth, height: cellHeight, ...toggle ? styles.filled : styles.empty}} onClick={() => {handleClick()}}></div>
         )
-    }, [toggle, cellWidth, cellHeight])
+    }, [toggle, cellWidth, cellHeight, cell.index, cellHandling])
 
     return (<>{cellUi}</>)
 }
