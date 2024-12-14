@@ -1,12 +1,20 @@
-import { Dispatch, PropsWithChildren, ReactElement, SetStateAction, useEffect, useMemo, useState } from "react";
+import { Dispatch, PropsWithChildren, ReactElement, ReactNode, SetStateAction, useEffect, useMemo, useState } from "react";
 import QRCell from "./qrCell";
 import { v4 as uuid } from "uuid";
 
-
 interface qrProps {
+    cellList?: number[],
+    containerOptions: ContainerOptions,
+    solution: number[],
+    hiddenDivHandling?: ReactNode,
+    id: number,
+}
+
+export interface ContainerOptions {
     containerWidth?: number | string,
     containerHeight?: number | string, 
-    cellList?: number[],
+    containerLeft?: number,
+    containerTop?: number,
     cellWidth:number,
     cellHeight: number,
     cellAmountWidth: number,
@@ -22,55 +30,66 @@ export interface cellType {
 export interface cellOptions {
     cellList: cellType[],
     setCellList: Dispatch<SetStateAction<cellType[]>>,
+    solution: number[],
+    canInteract: boolean,
+    setCanInteract: Dispatch<SetStateAction<boolean>>
 }
 
-export default function QRContainer({cellWidth, cellHeight, cellAmountWidth, cellAmountHeight}: qrProps): ReactElement<PropsWithChildren> {
+export default function QRContainer({containerOptions, solution, hiddenDivHandling, id}: qrProps): ReactElement<PropsWithChildren> {
 
-    const [saveToggle, setSaveToggle]: [boolean, Dispatch<boolean>] = useState(false)
-    const [cellList, setCellList]: [cellType[], Dispatch<SetStateAction<cellType[]>>]= useState<cellType[]>(localStorage.getItem("qrContainer") ? JSON.parse(localStorage.getItem("qrContainer") || "") : [])
+    const storageName: string = `qrContainer${id}`
+    const [saveToggle, setSaveToggle]: [boolean, Dispatch<SetStateAction<boolean>>] = useState(false)
+    const [cellList, setCellList]: [cellType[], Dispatch<SetStateAction<cellType[]>>]= useState<cellType[]>(localStorage.getItem(storageName) ? JSON.parse(localStorage.getItem(`qrContainer${id}`) || "") : [])
+    const [canInteract, setCanInteract]: [boolean, Dispatch<SetStateAction<boolean>>] = useState(true)
 
     useEffect(() => {
     const tempList: cellType[]  = [];
-    while(tempList.length < 1) {
-        for (let x = 0; x < cellAmountWidth*cellAmountHeight; x++) {
-        const num = Math.floor(Math.random()*2)
-        tempList.push({value:num, id:uuid(), index:x})
+    if (cellList.length === 0) {
+        while(tempList.length < 1) {
+            for (let x = 0; x < containerOptions.cellAmountWidth*containerOptions.cellAmountHeight; x++) {
+            //const num = Math.floor(Math.random()*2)
+            tempList.push({value:0, id:uuid(), index:x})
+            }
+             setCellList(tempList);
         }
-        if (cellList.length === 0) setCellList(tempList);
     }
     },[])
 
     useEffect(() => {
         console.log(JSON.stringify(cellList))
-        localStorage.setItem("qrContainer", JSON.stringify(cellList))
+        localStorage.setItem(`qrContainer${id}`, JSON.stringify(cellList))
     }, [cellList])
 
     const QRui = useMemo(() => {
         return (
             <div>
-                <div style={{display: 'flex', flexWrap: 'wrap', alignItems: 'flex-start', flexDirection: 'row', width: cellWidth*cellAmountWidth, height: 'auto'
+                {canInteract && hiddenDivHandling}
+                <div style={{display: 'flex', flexWrap: 'wrap', alignItems: 'flex-start', flexDirection: 'row', width: containerOptions.cellWidth*containerOptions.cellAmountWidth, 
+                            height: 'auto', border: !canInteract ? '4px solid green': '4px solid red', margin: '-1px', position: 'absolute', left: containerOptions.containerLeft, top: containerOptions.containerTop-25
                 }}>
                     {cellList.length > 1 && cellList.map((cell) => {
                         return (
                         <QRCell 
                             key={cell.index} 
-                            cellWidth={cellWidth} 
-                            cellHeight={cellHeight} 
+                            cellWidth={containerOptions.cellWidth} 
+                            cellHeight={containerOptions.cellHeight} 
                             toggleState={cell.value === 0 ? false : true} 
-                            cellHandling={{cellList, setCellList}}
+                            cellHandling={{cellList, setCellList, solution, canInteract, setCanInteract}}
                             cell={cell}
                         />
                             )})}
                 </div>
-                <p>Click here to toggle QR save data</p>
-                <button onClick={() => {
-                    setSaveToggle(!saveToggle)
-                }}>Toggle</button>
-                <button onClick={() => localStorage.clear()}>Clear Data</button>
-                {saveToggle && <div style={{width: cellWidth*cellAmountWidth}}><p style={{wordWrap: 'break-word'}}>{JSON.stringify(cellList, ["value"])}</p></div>}
+                <div style={{position: 'absolute', left: containerOptions.containerLeft, top: (containerOptions.containerTop || 0)+(containerOptions.cellAmountHeight*containerOptions.cellHeight)}}>
+                    {/*<p>Click here to toggle QR save data</p>
+                    <button onClick={() => {
+                        setSaveToggle(!saveToggle)
+                    }}>Toggle</button>*/}
+                    <button onClick={() => localStorage.removeItem(storageName)}>Clear Data</button>
+                    {saveToggle && <div style={{width: containerOptions.cellWidth*containerOptions.cellAmountWidth}}><p style={{wordWrap: 'break-word'}}>{JSON.stringify(cellList, ["value"])}</p></div>}
+                </div>
             </div>
         )
-    }, [cellList, cellWidth, cellHeight, cellAmountWidth, saveToggle])
+    }, [cellList, containerOptions, saveToggle, canInteract, solution, hiddenDivHandling])
     return (
     <>{QRui}</>
     )
