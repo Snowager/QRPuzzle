@@ -39,7 +39,8 @@ export default function QRContainer({containerOptions, solution, hiddenDivHandli
 
     const storageName: string = `qrContainer${id}`
     const [saveToggle, setSaveToggle]: [boolean, Dispatch<SetStateAction<boolean>>] = useState(false)
-    const [cellList, setCellList]: [cellType[], Dispatch<SetStateAction<cellType[]>>]= useState<cellType[]>(localStorage.getItem(storageName) ? JSON.parse(localStorage.getItem(`qrContainer${id}`) || "") : [])
+    const [cellList, setCellList]: [cellType[], Dispatch<SetStateAction<cellType[]>>] = useState<cellType[]>(localStorage.getItem(storageName) ? JSON.parse(localStorage.getItem(`qrContainer${id}`) || "") : [])
+    const [cellListPrintable, setCellListPrintable]: [number[], Dispatch<SetStateAction<number[]>>] = useState([]);
     const [canInteract, setCanInteract]: [boolean, Dispatch<SetStateAction<boolean>>] = useState(true)
 
     useEffect(() => {
@@ -56,9 +57,13 @@ export default function QRContainer({containerOptions, solution, hiddenDivHandli
     },[])
 
     useEffect(() => {
-        console.log(JSON.stringify(cellList))
+        const list = [];
+        for (const cell of cellList) {
+            list.push(cell.value)
+        }
+        setCellListPrintable(list)
         localStorage.setItem(`qrContainer${id}`, JSON.stringify(cellList))
-    }, [cellList])
+    }, [cellList, id])
 
     const QRui = useMemo(() => {
         return (
@@ -80,16 +85,16 @@ export default function QRContainer({containerOptions, solution, hiddenDivHandli
                             )})}
                 </div>
                 <div style={{position: 'absolute', left: containerOptions.containerLeft, top: (containerOptions.containerTop || 0)+(containerOptions.cellAmountHeight*containerOptions.cellHeight)}}>
-                    {/*<p>Click here to toggle QR save data</p>
+                    <p>Click here to toggle QR save data</p>
                     <button onClick={() => {
                         setSaveToggle(!saveToggle)
-                    }}>Toggle</button>*/}
+                    }}>Toggle {id}</button>
                     <button onClick={() => localStorage.removeItem(storageName)}>Clear Data</button>
-                    {saveToggle && <div style={{width: containerOptions.cellWidth*containerOptions.cellAmountWidth}}><p style={{wordWrap: 'break-word'}}>{JSON.stringify(cellList, ["value"])}</p></div>}
+                    {saveToggle && <div style={{width: containerOptions.cellWidth*containerOptions.cellAmountWidth}}><p style={{wordWrap: 'break-word'}}>{JSON.stringify(cellListPrintable)}</p></div>}
                 </div>
             </div>
         )
-    }, [cellList, containerOptions, saveToggle, canInteract, solution, hiddenDivHandling])
+    }, [cellList, containerOptions, saveToggle, canInteract, solution, hiddenDivHandling, cellListPrintable, storageName])
     return (
     <>{QRui}</>
     )
