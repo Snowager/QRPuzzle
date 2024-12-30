@@ -7,7 +7,7 @@ import DialPuzzleContainer from "./components/dialPuzzleContainer";
 
 function App() {
 
-  const PADDING = 10;
+  const PADDING = 20;
   const cellWidth = 20;
   const cellHeight = 20;
   const checkBoxWidth = 20 + PADDING;
@@ -58,7 +58,7 @@ function App() {
                 containerTop: 242,
               }}
               solution={[1, 0, 0, 1, 1, 1, 1, 1, 1, 0, 0, 1]}
-              checkBox={<div style={{position: 'absolute', top: -28, left: checkBoxLoc, width: 20, height: 20, border: '2px solid red'}}></div>}
+              checkBoxLeft={checkBoxLoc}
             />
             <QRContainer
               id={incrementId()}
@@ -87,7 +87,7 @@ function App() {
                   }}
                 ></div>
               }
-              checkBox={<div style={{position: 'absolute', top: -28, left: incrementCheckBox(), width: 20, height: 20, border: '2px solid red'}}></div>}
+              checkBoxLeft={incrementCheckBox()}
             />
             <QRContainer
               id={incrementId()}
@@ -104,7 +104,7 @@ function App() {
                 0, 1, 0, 0, 0, 0, 1, 0, 1, 1, 1, 1, 1, 0, 0, 0, 0, 1, 0, 1, 0,
                 1, 0, 1, 1, 0, 1, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 0, 1,
               ]}
-              checkBox={<div style={{position: 'absolute', top: -28, left: incrementCheckBox(), width: 20, height: 20, border: '2px solid red'}}></div>}
+              checkBoxLeft={incrementCheckBox()}
             />
             <QRContainer
               id={incrementId()}
@@ -117,7 +117,7 @@ function App() {
                 containerTop: 442,
               }}
               solution={[0, 1, 0, 0, 1, 0, 0, 0, 0, 1, 1, 0, 1, 1, 0]}
-              checkBox={<div style={{position: 'absolute', top: -28, left: incrementCheckBox(), width: 20, height: 20, border: '2px solid red'}}></div>}
+              checkBoxLeft={incrementCheckBox()}
             />
             <QRContainer
               id={incrementId()}
@@ -130,7 +130,7 @@ function App() {
                 containerTop: 180,
               }}
               solution={[0, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 0, 1, 0]}
-              checkBox={<div style={{position: 'absolute', top: -28, left: incrementCheckBox(), width: 20, height: 20, border: '2px solid red'}}></div>}
+              checkBoxLeft={incrementCheckBox()}
             />
             <QRContainer
               id={incrementId()}
@@ -146,7 +146,7 @@ function App() {
                 1, 1, 1, 1, 1, 1, 0, 0, 0, 1, 1, 0, 1, 0, 1, 1, 0, 0, 0, 1, 1,
                 1, 1, 1, 1,
               ]}
-              checkBox={<div style={{position: 'absolute', top: -28, left: incrementCheckBox(), width: 20, height: 20, border: '2px solid red'}}></div>}
+              checkBoxLeft={incrementCheckBox()}
             />
             <QRContainer
               id={incrementId()}
@@ -167,7 +167,7 @@ function App() {
                 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0,
               ]}
               tilePuzzle={true}
-              checkBox={<div style={{position: 'absolute', top: -28, left: incrementCheckBox(), width: 20, height: 20, border: '2px solid red'}}></div>}
+              checkBoxLeft={incrementCheckBox()}
             />
             <QRContainer
               id={incrementId()}
@@ -183,7 +183,7 @@ function App() {
                 0, 0, 0, 0, 1, 0, 1, 1, 0, 0, 1, 1, 0, 0, 1, 0, 1, 1, 0, 1, 1,
                 1, 0, 0, 0, 0, 0, 0, 0, 1,
               ]}
-              checkBox={<div style={{position: 'absolute', top: -28, left: incrementCheckBox(), width: 20, height: 20, border: '2px solid red'}}></div>}
+              checkBoxLeft={incrementCheckBox()}
             />
             <QRContainer
               id={incrementId()}
@@ -196,7 +196,7 @@ function App() {
                 containerTop: 544,
               }}
               solution={[0, 1, 0, 1, 1, 1, 0, 1, 0, 1, 1, 1, 0, 1, 0, 0, 1, 1]}
-              checkBox={<div style={{position: 'absolute', top: -28, left: incrementCheckBox(), width: 20, height: 20, border: '2px solid red'}}></div>}
+              checkBoxLeft={incrementCheckBox()}
             />
           </div>
         </div>
