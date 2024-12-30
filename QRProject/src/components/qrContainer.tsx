@@ -1,6 +1,7 @@
 import { Dispatch, PropsWithChildren, ReactElement, ReactNode, SetStateAction, useEffect, useMemo, useState } from "react";
 import QRCell from "./qrCell";
 import { v4 as uuid } from "uuid";
+import TileCell from "./tileCell";
 
 interface qrProps {
     cellList?: number[],
@@ -8,6 +9,7 @@ interface qrProps {
     solution: number[],
     hiddenDivHandling?: ReactNode,
     id: number,
+    tilePuzzle?: boolean
 }
 
 export interface ContainerOptions {
@@ -35,12 +37,12 @@ export interface cellOptions {
     setCanInteract: Dispatch<SetStateAction<boolean>>
 }
 
-export default function QRContainer({containerOptions, solution, hiddenDivHandling, id}: qrProps): ReactElement<PropsWithChildren> {
+export default function QRContainer({containerOptions, solution, hiddenDivHandling, id, tilePuzzle=false}: qrProps): ReactElement<PropsWithChildren> {
 
     const storageName: string = `qrContainer${id}`
     const [saveToggle, setSaveToggle]: [boolean, Dispatch<SetStateAction<boolean>>] = useState(false)
     const [cellList, setCellList]: [cellType[], Dispatch<SetStateAction<cellType[]>>] = useState<cellType[]>(localStorage.getItem(storageName) ? JSON.parse(localStorage.getItem(`qrContainer${id}`) || "") : [])
-    const [cellListPrintable, setCellListPrintable]: [number[], Dispatch<SetStateAction<number[]>>] = useState([]);
+    const [cellListPrintable, setCellListPrintable]: [number[], Dispatch<SetStateAction<number[]>>] = useState<number[]>([]);
     const [canInteract, setCanInteract]: [boolean, Dispatch<SetStateAction<boolean>>] = useState(true)
 
     useEffect(() => {
@@ -70,11 +72,19 @@ export default function QRContainer({containerOptions, solution, hiddenDivHandli
             <div>
                 {canInteract && hiddenDivHandling}
                 <div style={{display: 'flex', flexWrap: 'wrap', alignItems: 'flex-start', flexDirection: 'row', width: containerOptions.cellWidth*containerOptions.cellAmountWidth, 
-                            height: 'auto', border: !canInteract ? '4px solid green': '4px solid red', margin: '-1px', position: 'absolute', left: containerOptions.containerLeft, top: containerOptions.containerTop-25
+                            height: 'auto', border: !canInteract ? '4px solid green': '4px solid red', margin: '-1px', position: 'absolute', left: containerOptions.containerLeft, top: (containerOptions.containerTop || 0)-25
                 }}>
                     {cellList.length > 1 && cellList.map((cell) => {
                         return (
-                        <QRCell 
+                        tilePuzzle ? 
+                            <TileCell 
+                            key={cell.index} 
+                            cellWidth={containerOptions.cellWidth} 
+                            cellHeight={containerOptions.cellHeight} 
+                            cellHandling={{cellList, setCellList, solution, canInteract, setCanInteract}}
+                            cell={cell}/>
+                            :
+                            <QRCell 
                             key={cell.index} 
                             cellWidth={containerOptions.cellWidth} 
                             cellHeight={containerOptions.cellHeight} 
@@ -94,7 +104,7 @@ export default function QRContainer({containerOptions, solution, hiddenDivHandli
                 </div>
             </div>
         )
-    }, [cellList, containerOptions, saveToggle, canInteract, solution, hiddenDivHandling, cellListPrintable, storageName])
+    }, [cellList, containerOptions, saveToggle, canInteract, solution, hiddenDivHandling, cellListPrintable, storageName, id])
     return (
     <>{QRui}</>
     )
