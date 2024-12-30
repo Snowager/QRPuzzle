@@ -10,8 +10,8 @@ export default function LetterBox({letter, setBlackColor}: letterProps): ReactEl
 
     const styles: StyleSheet = {
         letterItem: {
-            height: '6.15%',
-            flexShrink: 0,
+            height: '4.2%',
+            width: '60%',
             backgroundColor: '#795548',
             border: '1px solid #000',
             margin: '2px',

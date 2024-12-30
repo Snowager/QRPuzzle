@@ -9,7 +9,8 @@ interface qrProps {
     solution: number[],
     hiddenDivHandling?: ReactNode,
     id: number,
-    tilePuzzle?: boolean
+    tilePuzzle?: boolean,
+    checkBox?: ReactNode,
 }
 
 export interface ContainerOptions {
@@ -37,7 +38,7 @@ export interface cellOptions {
     setCanInteract: Dispatch<SetStateAction<boolean>>
 }
 
-export default function QRContainer({containerOptions, solution, hiddenDivHandling, id, tilePuzzle=false}: qrProps): ReactElement<PropsWithChildren> {
+export default function QRContainer({containerOptions, solution, hiddenDivHandling, id, tilePuzzle=false, checkBox}: qrProps): ReactElement<PropsWithChildren> {
 
     const storageName: string = `qrContainer${id}`
     const [saveToggle, setSaveToggle]: [boolean, Dispatch<SetStateAction<boolean>>] = useState(false)
@@ -69,6 +70,8 @@ export default function QRContainer({containerOptions, solution, hiddenDivHandli
 
     const QRui = useMemo(() => {
         return (
+            <>
+            {!!checkBox && checkBox}
             <div>
                 {canInteract && hiddenDivHandling}
                 <div style={{display: 'flex', flexWrap: 'wrap', alignItems: 'flex-start', flexDirection: 'row', width: containerOptions.cellWidth*containerOptions.cellAmountWidth, 
@@ -94,15 +97,16 @@ export default function QRContainer({containerOptions, solution, hiddenDivHandli
                         />
                             )})}
                 </div>
-                <div style={{position: 'absolute', left: containerOptions.containerLeft, top: (containerOptions.containerTop || 0)+(containerOptions.cellAmountHeight*containerOptions.cellHeight)}}>
+                {/*<div style={{position: 'absolute', left: containerOptions.containerLeft, top: (containerOptions.containerTop || 0)+(containerOptions.cellAmountHeight*containerOptions.cellHeight)}}>
                     <p>Click here to toggle QR save data</p>
                     <button onClick={() => {
                         setSaveToggle(!saveToggle)
                     }}>Toggle {id}</button>
                     <button onClick={() => localStorage.removeItem(storageName)}>Clear Data</button>
                     {saveToggle && <div style={{width: containerOptions.cellWidth*containerOptions.cellAmountWidth}}><p style={{wordWrap: 'break-word'}}>{JSON.stringify(cellListPrintable)}</p></div>}
-                </div>
+                </div>*/}
             </div>
+            </>
         )
     }, [cellList, containerOptions, saveToggle, canInteract, solution, hiddenDivHandling, cellListPrintable, storageName, id])
     return (

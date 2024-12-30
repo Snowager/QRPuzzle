@@ -14,7 +14,7 @@ export default function LetterDial({dialBox, active = true}: letterDialProps): R
     const [letterList, setLetterList] = useState(dialBox);
     const current = useRef(3);
     const direction = useRef("forward")
-    const [translateAmount, setTranslateAmount] = useState(current.current * 36)
+    const [translateAmount, setTranslateAmount] = useState(current.current * 16)
     const [transition, setTransition] = useState("");
 
     useEffect(() => {
@@ -49,7 +49,7 @@ export default function LetterDial({dialBox, active = true}: letterDialProps): R
                 backgroundColor: '#ccc',
                 display: 'flex',
                 flexDirection: 'column',
-                width: '100%',
+                width: '80%',
                 height: '100%',
                 transition: `${transition}`,
                 transform: `translateY(-${translateAmount}px)`,
@@ -66,7 +66,7 @@ export default function LetterDial({dialBox, active = true}: letterDialProps): R
             setLetterList(_list);
             setTransition("");
             current.current = 3;
-            setTranslateAmount(current.current * 36);
+            setTranslateAmount(current.current * 16);
         }
 
         function handleForward() {
@@ -74,7 +74,7 @@ export default function LetterDial({dialBox, active = true}: letterDialProps): R
             setTransition("transform 0.2s ease-in-out");
             if (current.current >= 3) {
                 current.current -= 2;
-                setTranslateAmount(current.current * 20);
+                setTranslateAmount(current.current * 2);
             }
             console.log(direction.current)
             console.log(JSON.stringify(letterList))
@@ -85,14 +85,14 @@ export default function LetterDial({dialBox, active = true}: letterDialProps): R
             setTransition("transform 0.2s ease-in-out");
             if (current.current <= 3) {
                 current.current += 2;
-                setTranslateAmount(current.current * 39);
+                setTranslateAmount(current.current * 19);
             }
             console.log(direction.current)
         }
 
         return (
             <>
-            <div style={{display: 'flex', flexDirection: 'column', width: '100%',
+            <div style={{display: 'flex', flexDirection: 'column', width: '10%',
                 height: '100%', justifyContent: 'space-between'}}> 
             {active ? <button  style={{zIndex: 10, position: 'relative', top: '-5px', backgroundColor: '#f39', borderRadius: 20,
             }} onClick={() => handleForward()}></button> : <div style={{zIndex: 10, position: 'relative', top: '-25px', width: '90px', height: '24.5px'}}></div>}
