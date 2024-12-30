@@ -41,7 +41,7 @@ export interface cellOptions {
 export default function QRContainer({containerOptions, solution, hiddenDivHandling, id, tilePuzzle=false, checkBox}: qrProps): ReactElement<PropsWithChildren> {
 
     const storageName: string = `qrContainer${id}`
-    const [saveToggle, setSaveToggle]: [boolean, Dispatch<SetStateAction<boolean>>] = useState(false)
+    const [saveToggle]: [boolean, Dispatch<SetStateAction<boolean>>] = useState(false)
     const [cellList, setCellList]: [cellType[], Dispatch<SetStateAction<cellType[]>>] = useState<cellType[]>(localStorage.getItem(storageName) ? JSON.parse(localStorage.getItem(`qrContainer${id}`) || "") : [])
     const [cellListPrintable, setCellListPrintable]: [number[], Dispatch<SetStateAction<number[]>>] = useState<number[]>([]);
     const [canInteract, setCanInteract]: [boolean, Dispatch<SetStateAction<boolean>>] = useState(true)
