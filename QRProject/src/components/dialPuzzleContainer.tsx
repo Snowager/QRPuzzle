@@ -48,9 +48,6 @@ const styles: StyleSheet = {
         justifyContent: "center",
         flexDirection: "row",
         position: 'absolute',
-        margin: '100px',
-        left: -700,
-        top: -60,
         backgroundColor: "#fff",
     },
 }
