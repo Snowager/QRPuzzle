@@ -2,7 +2,7 @@ import { letterBox } from "../components/dialPuzzleContainer";
 
 export const letterLists: letterBox[][] = [
     [
-        {letter:"a", setBlackColor:false},
+        {letter:"x", setBlackColor:false},
         {letter:"s", setBlackColor:false},
         {letter:"l", setBlackColor:false},
         {letter:"u", setBlackColor:true},
@@ -28,8 +28,8 @@ export const letterLists: letterBox[][] = [
         {letter:"d", setBlackColor:false},
         {letter:"i", setBlackColor:true},
         {letter:"i", setBlackColor:false},
-        {letter:"a", setBlackColor:false},
-        {letter:"a", setBlackColor:false},
+        {letter:"s", setBlackColor:false},
+        {letter:"h", setBlackColor:false},
     ],
     [
         {letter:"d", setBlackColor:false},
@@ -43,8 +43,8 @@ export const letterLists: letterBox[][] = [
         {letter:"o", setBlackColor:true},
         {letter:"m", setBlackColor:false},
         {letter:"v", setBlackColor:true},
-        {letter:"a", setBlackColor:false},
-        {letter:"a", setBlackColor:false},
+        {letter:"n", setBlackColor:false},
+        {letter:"n", setBlackColor:false},
     ],
     [
         {letter:"o", setBlackColor:false},
@@ -58,8 +58,8 @@ export const letterLists: letterBox[][] = [
         {letter:"w", setBlackColor:false},
         {letter:"e", setBlackColor:false},
         {letter:"e", setBlackColor:true},
-        {letter:"a", setBlackColor:false},
-        {letter:"a", setBlackColor:false},
+        {letter:"i", setBlackColor:false},
+        {letter:"f", setBlackColor:false},
     ],
     [
         {letter:"a", setBlackColor:true},
@@ -73,8 +73,8 @@ export const letterLists: letterBox[][] = [
         {letter:"i", setBlackColor:false},
         {letter:"t", setBlackColor:false},
         {letter:"n", setBlackColor:false},
-        {letter:"a", setBlackColor:false},
-        {letter:"a", setBlackColor:false},
+        {letter:"j", setBlackColor:false},
+        {letter:"r", setBlackColor:false},
     ],
     [
         {letter:"l", setBlackColor:false},
@@ -88,8 +88,8 @@ export const letterLists: letterBox[][] = [
         {letter:"t", setBlackColor:false},
         {letter:"h", setBlackColor:true},
         {letter:"t", setBlackColor:false},
-        {letter:"a", setBlackColor:false},
-        {letter:"a", setBlackColor:false},
+        {letter:"u", setBlackColor:false},
+        {letter:"q", setBlackColor:false},
     ],
     [
         {letter:"l", setBlackColor:true},
@@ -103,8 +103,8 @@ export const letterLists: letterBox[][] = [
         {letter:"h", setBlackColor:true},
         {letter:"a", setBlackColor:false},
         {letter:"o", setBlackColor:true},
-        {letter:"a", setBlackColor:false},
-        {letter:"a", setBlackColor:false},
+        {letter:"d", setBlackColor:false},
+        {letter:"y", setBlackColor:false},
     ],
     [
         {letter:"w", setBlackColor:true},
@@ -118,8 +118,8 @@ export const letterLists: letterBox[][] = [
         {letter:"t", setBlackColor:false},
         {letter:"t", setBlackColor:false},
         {letter:"y", setBlackColor:true},
-        {letter:"a", setBlackColor:false},
-        {letter:"a", setBlackColor:false},
+        {letter:"y", setBlackColor:false},
+        {letter:"r", setBlackColor:false},
     ],
     [
         {letter:"h", setBlackColor:false},
@@ -133,8 +133,8 @@ export const letterLists: letterBox[][] = [
         {letter:"h", setBlackColor:false},
         {letter:"i", setBlackColor:true},
         {letter:"o", setBlackColor:false},
-        {letter:"a", setBlackColor:false},
-        {letter:"a", setBlackColor:false},
+        {letter:"w", setBlackColor:false},
+        {letter:"e", setBlackColor:false},
     ],
     [
         {letter:"a", setBlackColor:false},
@@ -149,6 +149,6 @@ export const letterLists: letterBox[][] = [
         {letter:"e", setBlackColor:false},
         {letter:"s", setBlackColor:true},
         {letter:"u", setBlackColor:false},
-        {letter:"a", setBlackColor:false},
+        {letter:"l", setBlackColor:false},
     ],
 ]
