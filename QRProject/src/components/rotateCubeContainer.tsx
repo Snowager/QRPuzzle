@@ -30,19 +30,19 @@ export default function RotateCubeContainer({
             },
             backFace: {
                 WebkitTransform: `rotateY(180deg) translateZ(${size}px)`,
-                backgroundColor: "white",
+                backgroundColor: "black",
             },
             frontFace: {
                 WebkitTransform: `rotateY(0deg) translateZ(${size}px)`,
-                backgroundColor: "white",
+                backgroundColor: "black",
             },
             leftFace: {
                 WebkitTransform: `rotateY(270deg) translateZ(${size}px)`,
-                backgroundColor: "white",
+                backgroundColor: "black",
             },
             rightFace: {
                 WebkitTransform: `rotateY(90deg) translateZ(${size}px)`,
-                backgroundColor: "white",
+                backgroundColor: "black",
             },
             face: {
                 position: "absolute",

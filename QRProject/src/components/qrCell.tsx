@@ -1,15 +1,16 @@
 import { useState, useMemo, useEffect, } from "react";
 import { cellOptions, cellType } from "./qrContainer";
 
-interface QRCellProps {
-    toggleState: boolean,
+export interface QRCellProps {
+    toggleState?: boolean,
     cellWidth: number,
     cellHeight: number,
     cellHandling: cellOptions,
     cell: cellType,
+    storageName: string
 }
 
-export default function QRCell({toggleState, cellWidth, cellHeight, cellHandling, cell}: QRCellProps) {
+export default function QRCell({toggleState, cellWidth, cellHeight, cellHandling, cell, storageName}: QRCellProps) {
     const [toggle, setToggle] = useState(toggleState)
 
     useEffect(() => {
@@ -29,7 +30,7 @@ export default function QRCell({toggleState, cellWidth, cellHeight, cellHandling
                 cellChange.value = toggle ? 0:1;
                 newList[cell.index] = cellChange;
                 cellHandling.setCellList(newList);
-                localStorage.setItem("qrContainer", JSON.stringify(newList))
+                localStorage.setItem(storageName, JSON.stringify(newList))
                 
             }
         }
