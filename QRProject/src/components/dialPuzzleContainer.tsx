@@ -16,13 +16,13 @@ export default function DialPuzzleContainer() {
     const dialList: ReactNode[] = [
     ]
 
-    const shuffleArray = (arr: letterBox[]) => arr.sort(() => 0.5 - Math.random());
-
     for (let x = 0; x < letterLists.length; x++) {
-        if (x === 0) {
+        const randomSplitPoint = Math.floor(Math.random()*letterLists[x].length)
+        if (x === 0 || x == letterLists.length - 1) {
             dialList.push(<LetterDial dialBox={letterLists[x]} active={false}></LetterDial>)
         } else {
-            dialList.push(<LetterDial dialBox={shuffleArray(letterLists[x])}></LetterDial>)
+            console.log([...letterLists[x].slice(randomSplitPoint, letterLists[x].length), ...letterLists[x].slice(0,randomSplitPoint)])
+            dialList.push(<LetterDial dialBox={[...letterLists[x].slice(randomSplitPoint, letterLists[x].length), ...letterLists[x].slice(0,randomSplitPoint)]}></LetterDial>)
         }
     }
 
@@ -48,6 +48,6 @@ const styles: StyleSheet = {
         justifyContent: "center",
         flexDirection: "row",
         position: 'absolute',
-        backgroundColor: "#fff",
+        backgroundColor: "#000",
     },
 }

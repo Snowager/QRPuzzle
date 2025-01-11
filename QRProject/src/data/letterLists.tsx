@@ -137,6 +137,7 @@ export const letterLists: letterBox[][] = [
         {letter:"a", setBlackColor:false},
     ],
     [
+        {letter:"a", setBlackColor:false},
         {letter:"o", setBlackColor:false},
         {letter:"s", setBlackColor:true},
         {letter:"u", setBlackColor:true},
@@ -148,7 +149,6 @@ export const letterLists: letterBox[][] = [
         {letter:"e", setBlackColor:false},
         {letter:"s", setBlackColor:true},
         {letter:"u", setBlackColor:false},
-        {letter:"a", setBlackColor:false},
         {letter:"a", setBlackColor:false},
     ],
 ]

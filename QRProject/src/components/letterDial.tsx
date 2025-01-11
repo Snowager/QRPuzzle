@@ -16,6 +16,7 @@ export default function LetterDial({dialBox, active = true}: letterDialProps): R
     const direction = useRef("forward")
     const [translateAmount, setTranslateAmount] = useState(current.current * 16)
     const [transition, setTransition] = useState("");
+    console.log(letterList)
 
     useEffect(() => {
         if (translateAmount > 10) {
