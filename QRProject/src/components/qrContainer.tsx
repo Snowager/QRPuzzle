@@ -41,9 +41,9 @@ export interface cellOptions {
 export default function QRContainer({containerOptions, solution, hiddenDivHandling, id, tilePuzzle=false, checkBoxLeft}: qrProps): ReactElement<PropsWithChildren> {
 
     const storageName: string = `qrContainer${id}`
-    const [saveToggle, setSaveToggle]: [boolean, Dispatch<SetStateAction<boolean>>] = useState(false)
+    //const [saveToggle]: [boolean, Dispatch<SetStateAction<boolean>>] = useState(false)
     const [cellList, setCellList]: [cellType[], Dispatch<SetStateAction<cellType[]>>] = useState<cellType[]>(localStorage.getItem(storageName) ? JSON.parse(localStorage.getItem(`qrContainer${id}`) || "") : [])
-    const [cellListPrintable, setCellListPrintable]: [number[], Dispatch<SetStateAction<number[]>>] = useState<number[]>([]);
+    //const [cellListPrintable, setCellListPrintable]: [number[], Dispatch<SetStateAction<number[]>>] = useState<number[]>([]);
     const [canInteract, setCanInteract]: [boolean, Dispatch<SetStateAction<boolean>>] = useState(true)
 
     useEffect(() => {
@@ -64,7 +64,7 @@ export default function QRContainer({containerOptions, solution, hiddenDivHandli
         for (const cell of cellList) {
             list.push(cell.value)
         }
-        setCellListPrintable(list)
+        //setCellListPrintable(list)
         localStorage.setItem(`qrContainer${id}`, JSON.stringify(cellList))
     }, [cellList, id])
 
@@ -100,16 +100,16 @@ export default function QRContainer({containerOptions, solution, hiddenDivHandli
                             )})}
                 </div>
             </div>
-            <div style={{position: 'relative', left: checkBoxLeft, top: 660}}>
+            {/*<div style={{position: 'relative', left: checkBoxLeft, top: 660}}>
                     <button onClick={() => {
                         setSaveToggle(!saveToggle)
                     }}>Toggle {id}</button>
                     <button onClick={() => localStorage.removeItem(storageName)}>Clear</button>
                     {saveToggle && <div><p style={{wordWrap: 'break-word'}}>{JSON.stringify(cellListPrintable)}</p></div>}
-            </div>
+            </div>*/}
             </>
         )
-    }, [checkBoxLeft, canInteract, id, hiddenDivHandling, containerOptions.cellWidth, containerOptions.cellAmountWidth, containerOptions.containerLeft, containerOptions.containerTop, containerOptions.cellHeight, cellList, saveToggle, cellListPrintable, tilePuzzle, solution, storageName])
+    }, [checkBoxLeft, canInteract, id, hiddenDivHandling, containerOptions.cellWidth, containerOptions.cellAmountWidth, containerOptions.containerLeft, containerOptions.containerTop, containerOptions.cellHeight, cellList, tilePuzzle, solution, storageName])
     return (
     <>{QRui}</>
     )

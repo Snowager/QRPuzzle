@@ -5,6 +5,7 @@ import QRContainer from "./components/qrContainer";
 import QR from "./assets/qr-code1.png";
 import DialPuzzleContainer from "./components/dialPuzzleContainer";
 import RotateCubeContainer from "./components/rotateCubeContainer";
+import { buttonStyle } from "./styles/button";
 
 function App() {
   const PADDING = 20;
@@ -226,14 +227,18 @@ function App() {
     );
 
     return (
-      <div style={{ width: "1000px", height: "800px" }}>
+      <>
+      <div style={{ width: "1000px", height: "660px", display:'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center'}}>
         <RotateCubeContainer
           frontFace={qrFace}
           leftFace={<DialPuzzleContainer />}
           rightFace={tileFace}
           backFace={<div></div>}
         />
+        <button onClick={() => localStorage.clear()} style={{...buttonStyle.black}}>Clear all sections</button>
       </div>
+      
+      </>
     );
   }, []);
 
