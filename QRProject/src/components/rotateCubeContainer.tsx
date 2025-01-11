@@ -1,5 +1,6 @@
 import { ReactNode, useMemo, useState } from "react";
 import { StyleSheet } from "./dialPuzzleContainer";
+import { buttonStyle } from "../styles/button";
 
 export interface cubeProps {
     frontFace: ReactNode;
@@ -73,7 +74,7 @@ export default function RotateCubeContainer({
                     <div style={{display: 'flex', flexDirection: 'column', justifyContent: 'center', paddingRight: 20, zIndex: 10}}>
                         <button
                             onClick={() => rotateRight()}
-                            style={{ height: 60, position: "relative" }}
+                            style={{ height: 60, position: "relative", ...buttonStyle.black}}
                         >
                             RotateLeft
                         </button>
@@ -105,7 +106,7 @@ export default function RotateCubeContainer({
                     <div style={{display: 'flex', flexDirection: 'column', justifyContent: 'center', paddingLeft: 20}}>
                         <button
                             onClick={() => rotateLeft()}
-                            style={{ height: 60, position: "relative" }}
+                            style={{ height: 60, position: "relative", ...buttonStyle.black }}
                         >
                             RotateRight
                         </button>
