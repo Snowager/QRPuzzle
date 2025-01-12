@@ -7,7 +7,7 @@ export interface QRCellProps {
     cellHeight: number,
     cellHandling: cellOptions,
     cell: cellType,
-    storageName: string
+    storageName?: string
 }
 
 export default function QRCell({toggleState, cellWidth, cellHeight, cellHandling, cell, storageName}: QRCellProps) {
@@ -30,7 +30,7 @@ export default function QRCell({toggleState, cellWidth, cellHeight, cellHandling
                 cellChange.value = toggle ? 0:1;
                 newList[cell.index] = cellChange;
                 cellHandling.setCellList(newList);
-                localStorage.setItem(storageName, JSON.stringify(newList))
+                if (storageName) localStorage.setItem(storageName, JSON.stringify(newList))
                 
             }
         }
@@ -38,7 +38,7 @@ export default function QRCell({toggleState, cellWidth, cellHeight, cellHandling
         return (
             <div style={{width: cellWidth, height: cellHeight, ...toggle ? styles.filled : styles.empty}} onClick={() => {if (cellHandling.canInteract) handleClick()}}></div>
         )
-    }, [toggle, cellWidth, cellHeight, cell.index, cellHandling])
+    }, [cellWidth, cellHeight, toggle, cellHandling, cell.index, storageName])
 
     return (<>{cellUi}</>)
 }

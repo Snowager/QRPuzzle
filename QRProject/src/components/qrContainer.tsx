@@ -1,12 +1,14 @@
-import { Dispatch, PropsWithChildren, ReactElement, ReactNode, SetStateAction, useEffect, useMemo, useState } from "react";
+import { Dispatch, PropsWithChildren, ReactElement, ReactNode, SetStateAction, useContext, useEffect, useMemo, useState } from "react";
 import QRCell from "./qrCell";
 import { v4 as uuid } from "uuid";
 import TileCell from "./tileCell";
+import { puzzleContext } from "../context/puzzleContext";
+import { solvedList } from "../App";
 
-interface qrProps {
+export interface qrProps {
     cellList?: number[],
     containerOptions: ContainerOptions,
-    solution: number[],
+    solution?: number[],
     hiddenDivHandling?: ReactNode,
     id: number,
     tilePuzzle?: boolean,
@@ -33,7 +35,7 @@ export interface cellType {
 export interface cellOptions {
     cellList: cellType[],
     setCellList: Dispatch<SetStateAction<cellType[]>>,
-    solution: number[],
+    solution?: number[],
     canInteract: boolean,
     setCanInteract: Dispatch<SetStateAction<boolean>>
 }
@@ -45,6 +47,15 @@ export default function QRContainer({containerOptions, solution, hiddenDivHandli
     const [cellList, setCellList]: [cellType[], Dispatch<SetStateAction<cellType[]>>] = useState<cellType[]>(localStorage.getItem(storageName) ? JSON.parse(localStorage.getItem(`qrContainer${id}`) || "") : [])
     //const [cellListPrintable, setCellListPrintable]: [number[], Dispatch<SetStateAction<number[]>>] = useState<number[]>([]);
     const [canInteract, setCanInteract]: [boolean, Dispatch<SetStateAction<boolean>>] = useState(true)
+    const {solved, setSolved} = useContext(puzzleContext);
+
+    useEffect(() => {
+        if (!canInteract && !solved[`puzzle${id}` as keyof solvedList]) {
+            setSolved({...solved,
+                [`puzzle${id}`]: true})
+            console.log(localStorage.getItem(storageName))
+        }
+    }, [canInteract, solved, id])
 
     useEffect(() => {
     const tempList: cellType[]  = [];
@@ -71,7 +82,7 @@ export default function QRContainer({containerOptions, solution, hiddenDivHandli
     const QRui = useMemo(() => {
         return (
             <>
-            {<div style={{position: 'absolute', display:'flex', alignItems:'center', justifyContent: 'center', top: -28, left: checkBoxLeft, width: 20, height: 20, border: `2px solid ${canInteract ? 'red' : 'green'}`, color: `${canInteract ? 'red' : 'green'}`, fontSize: 20, fontWeight: 'bold'}}>{id}</div>}
+            {<div style={{position: 'absolute', display:'flex', alignItems:'center', backgroundColor: 'white', justifyContent: 'center', top: -28, left: checkBoxLeft, width: 20, height: 20, border: `2px solid ${canInteract ? 'red' : 'green'}`, color: `${canInteract ? 'red' : 'green'}`, fontSize: 20, fontWeight: 'bold'}}>{id}</div>}
             <div>
                 {canInteract && hiddenDivHandling}
                 <div style={{display: 'flex', flexWrap: 'wrap', alignItems: 'flex-start', flexDirection: 'row', width: containerOptions.cellWidth*containerOptions.cellAmountWidth, 

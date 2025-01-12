@@ -1,4 +1,4 @@
-import React, { ReactNode } from "react"
+import React, { Dispatch, ReactElement, ReactNode, SetStateAction, useEffect, useMemo, useState } from "react"
 import LetterDial from "./letterDial"
 import { letterLists } from "../data/letterLists"
 
@@ -13,30 +13,34 @@ export interface letterBox {
 
 export default function DialPuzzleContainer() {
 
-    const dialList: ReactNode[] = [
-    ]
-
-    for (let x = 0; x < letterLists.length; x++) {
-        const randomSplitPoint = Math.floor(Math.random()*letterLists[x].length)
-        if (x === 0 || x == letterLists.length - 1) {
-            dialList.push(<LetterDial dialBox={letterLists[x]} active={false}></LetterDial>)
-        } else {
-            console.log([...letterLists[x].slice(randomSplitPoint, letterLists[x].length), ...letterLists[x].slice(0,randomSplitPoint)])
-            dialList.push(<LetterDial dialBox={[...letterLists[x].slice(randomSplitPoint, letterLists[x].length), ...letterLists[x].slice(0,randomSplitPoint)]}></LetterDial>)
+    const [dialList, setDialList]: [ReactElement[], Dispatch<SetStateAction<ReactElement[]>>] = useState(null);
+    useEffect(() => {
+        const list: ReactElement[] = [
+        ]
+        for (let x = 0; x < letterLists.length; x++) {
+            const randomSplitPoint = Math.floor(Math.random()*letterLists[x].length)
+            if (x === 0 || x == letterLists.length - 1) {
+                list.push(<LetterDial dialBox={letterLists[x]} active={false}></LetterDial>)
+            } else {
+                list.push(<LetterDial dialBox={[...letterLists[x].slice(randomSplitPoint, letterLists[x].length), ...letterLists[x].slice(0,randomSplitPoint)]}></LetterDial>)
+            }
         }
-    }
+        setDialList(list);
+    }, [letterLists])
 
-    return (
+    const ui = useMemo(() => {return (
         <>
         <div style={{...styles.container}}>
-            {dialList.map((dial: ReactNode) => {
+            {dialList && dialList.map((dial: ReactNode) => {
                 return (
-                    dial
+                    <>{dial}</> 
                 )
             })}
         </div>
         </>
-    )
+    )}, [dialList])
+
+    return <>{ui}</>
 }
 
 const styles: StyleSheet = {

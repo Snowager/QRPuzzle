@@ -1,19 +1,37 @@
 import { useState, useMemo, useEffect, Dispatch, SetStateAction } from "react";
 import { cellType } from "./qrContainer";
-import { QRCellProps } from "./qrCell";
+import "../styles/reveal.css"
 
 export default function TileCell({
   cellWidth,
   cellHeight,
   cellHandling,
   cell,
-  storageName,
-}: QRCellProps) {
+  storageName = "",
+  colorTile = false}) {
   const [tileIndex, setTileIndex]: [number, Dispatch<SetStateAction<number>>] =
     useState(cell.value);
 
+    const styleArr = [
+      {
+        backgroundColor: "white",
+      },
+      {
+        backgroundColor: "#1B557F",
+      },
+      {
+        backgroundColor: !colorTile ? "#F5915D" : "white",
+      },
+      {
+        backgroundColor: "#CBA057",
+      },
+      {
+        backgroundColor: "white",
+      },
+    ];
+
   useEffect(() => {
-    const stringList = cellHandling.cellList.map((cell) => cell.value);
+    const stringList = cellHandling.cellList.map((cell: { value: never; }) => cell.value);
     if (JSON.stringify(stringList) === JSON.stringify(cellHandling.solution)) {
       cellHandling.setCanInteract(false);
     }
@@ -25,8 +43,7 @@ export default function TileCell({
 		cellChange.value = tileIndex;
 		newList[cell.index] = cellChange;
 		cellHandling.setCellList(newList);
-		localStorage.setItem(storageName, JSON.stringify(newList));
-		console.log(storageName)
+		if (storageName) localStorage.setItem(storageName, JSON.stringify(newList));
 	}, [tileIndex])
 
   const cellUi = useMemo(() => {
@@ -36,7 +53,8 @@ export default function TileCell({
 
     return (
       <div
-        style={{ width: cellWidth, height: cellHeight, ...styleArr[tileIndex] }}
+        style={{ width: cellWidth, height: cellHeight, ...styleArr[tileIndex]}}
+        className={(colorTile && tileIndex==4) ? "noiseColor" : tileIndex===2 ? "noiseBlocker" : ""}
         onClick={() => {
           if (cellHandling.canInteract) handleClick();
         }}
@@ -46,21 +64,3 @@ export default function TileCell({
 
   return <>{cellUi}</>;
 }
-
-const styleArr = [
-  {
-    backgroundColor: "white",
-  },
-  {
-    backgroundColor: "#1B557F",
-  },
-  {
-    backgroundColor: "#F5915D",
-  },
-  {
-    backgroundColor: "#CBA057",
-  },
-  {
-    backgroundColor: "#A2AFD5",
-  },
-];

@@ -1,0 +1,135 @@
+:root {
+  --reveal: hsla(320, 89%, 60%, 0.949);
+  --whatisit: hsla(-60, 100%, 50%, .35);
+  --noiseColor: hsla(171, 100%, 86%, 0.9);
+  --noiseBlocker: hsla(305, 69%, 86%, 0.949);
+}
+
+/* Take a black/dark pencil/ink drawing on white paper... */
+.hidden {
+  width: 100%;
+  height: 100vh;
+  background: #fff center center no-repeat;
+/*   background-image: 
+    radial-gradient(circle, #fff, transparent 10%),
+    url(https://s3-us-west-2.amazonaws.com/s.cdpn.io/61811/signsofsatx1.jpg);
+  background-size: auto auto, contain; */
+  opacity: .75;
+}
+
+.hidden::before {
+  background: #fff center center no-repeat;
+  background-size: auto auto, contain;
+  filter: grayscale(100%);
+  opacity: 1;
+}
+
+/* ... and blend it with a block of cyan to make the pencil/ink lines cyan */
+.hidden::before,
+.hidden::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+}
+.hidden::after {
+  background: hsla(165, 100%, 50%, 1);
+  mix-blend-mode: screen;
+  z-index: 1;
+}
+.noise {
+  --start: 5px;
+  --end: 7px;
+  background: 
+    repeating-linear-gradient(155deg,
+      transparent 0, 
+      transparent var(--start), 
+      var(--reveal) var(--start), 
+      var(--reveal) var(--end)),
+    repeating-linear-gradient(115deg,
+      transparent 0, 
+      transparent var(--start), 
+      var(--reveal) var(--start), 
+      var(--reveal) var(--end)),
+    repeating-linear-gradient(45deg,
+      transparent 0, 
+      transparent var(--start), 
+      var(--reveal) var(--start), 
+      var(--reveal) var(--end));
+  position: relative;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  display: flex;
+  alignItems: center;
+  justifyItems: center;
+  color: var(--reveal);
+  opacity: 1;
+}
+
+.noiseColor {
+  --start: 5px;
+  --end: 7px;
+  background: 
+    repeating-linear-gradient(155deg,
+      transparent 0, 
+      transparent var(--start), 
+      var(--noiseColor) var(--start), 
+      var(--noiseColor) var(--end)),
+    repeating-linear-gradient(115deg,
+      transparent 0, 
+      transparent var(--start), 
+      var(--noiseColor) var(--start), 
+      var(--noiseColor) var(--end)),
+    repeating-linear-gradient(45deg,
+      transparent 0, 
+      transparent var(--start), 
+      var(--noiseColor) var(--start), 
+      var(--noiseColor) var(--end));
+  position: relative;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  display: flex;
+  alignItems: center;
+  justifyItems: center;
+  color: var(--noiseColor);
+  opacity: 1;
+  z-index: 2;
+}
+
+.noiseBlocker {
+  --start: 5px;
+  --end: 7px;
+  background: 
+    repeating-linear-gradient(155deg,
+      transparent 0, 
+      transparent var(--start), 
+      var(--noiseBlocker) var(--start), 
+      var(--noiseBlocker) var(--end)),
+    repeating-linear-gradient(115deg,
+      transparent 0, 
+      transparent var(--start), 
+      var(--noiseBlocker) var(--start), 
+      var(--noiseBlocker) var(--end)),
+    repeating-linear-gradient(45deg,
+      transparent 0, 
+      transparent var(--start), 
+      var(--noiseBlocker) var(--start), 
+      var(--noiseBlocker) var(--end));
+  position: relative;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  display: flex;
+  alignItems: center;
+  justifyItems: center;
+  color: var(--noiseBlocker);
+  opacity: 1;
+  z-index: 2;
+}

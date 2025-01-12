@@ -1,19 +1,32 @@
 //import { Dispatch, useState } from 'react'
-import { useMemo } from "react";
+import { Dispatch, SetStateAction, useMemo, useState } from "react";
 import "./App.css";
 import QRContainer from "./components/qrContainer";
 import QR from "./assets/qr-code1.png";
 import DialPuzzleContainer from "./components/dialPuzzleContainer";
 import RotateCubeContainer from "./components/rotateCubeContainer";
 import { buttonStyle } from "./styles/button";
+import { puzzleContext } from "./context/puzzleContext";
+import { checkBoxWidth, tileWidth, tileHeight, cellWidth, cellHeight } from "./styles/dimensions";
+import "./styles/reveal.css"
+import ColorPuzzleContainer from "./components/colorPuzzleContainer";
+
+
+export interface solvedList {
+  puzzle1: boolean,
+  puzzle2: boolean,
+  puzzle3: boolean,
+  puzzle4: boolean,
+  puzzle5: boolean,
+  puzzle6: boolean,
+  puzzle7: boolean,
+  puzzle8: boolean,
+  puzzle9: boolean,
+}
 
 function App() {
-  const PADDING = 20;
-  const cellWidth = 20;
-  const cellHeight = 20;
-  const tileWidth = 90;
-  const tileHeight = 90;
-  const checkBoxWidth = 20 + PADDING;
+  const [solved, setSolved]: [solvedList, Dispatch<SetStateAction<solvedList>>]  = useState<solvedList>({puzzle1:false,puzzle2:false,puzzle3:false,puzzle4:false,puzzle5:false,puzzle6:false,puzzle7:false,puzzle8:false,puzzle9:false})
+  const context = useMemo(() => ({solved, setSolved}), [solved]);
 
   const ui = useMemo(() => {
     let checkBoxLoc = 20;
@@ -30,6 +43,7 @@ function App() {
 
     const tileFace = (
       <div>
+        {/** Tile Puzzle 1 */}
         <QRContainer
           id={incrementId()}
           containerOptions={{
@@ -69,6 +83,7 @@ function App() {
               width: 660,
             }}
           >
+            {/** Mail Puzzle 2 */}
             <QRContainer
               id={incrementId()}
               containerOptions={{
@@ -82,6 +97,7 @@ function App() {
               solution={[1, 0, 0, 1, 1, 1, 1, 1, 1, 0, 0, 1]}
               checkBoxLeft={checkBoxLoc}
             />
+            {/** Color Puzzle 3 */}
             <QRContainer
               id={incrementId()}
               containerOptions={{
@@ -111,6 +127,7 @@ function App() {
               }
               checkBoxLeft={incrementCheckBox()}
             />
+            {/** Word Puzzle 4 */}
             <QRContainer
               id={incrementId()}
               containerOptions={{
@@ -131,6 +148,7 @@ function App() {
               ]}
               checkBoxLeft={incrementCheckBox()}
             />
+            {/** Four Puzzle 5 */}
             <QRContainer
               id={incrementId()}
               containerOptions={{
@@ -155,6 +173,7 @@ function App() {
               solution={[0, 1, 0, 0, 1, 0, 0, 0, 0, 1, 1, 0, 1, 1, 0]}
               checkBoxLeft={incrementCheckBox()}
             />
+            {/** F shape Puzzle 6 */}
             <QRContainer
               id={incrementId()}
               containerOptions={{
@@ -168,6 +187,7 @@ function App() {
               solution={[0, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 0, 1, 0]}
               checkBoxLeft={incrementCheckBox()}
             />
+            {/** Puzzle 7 */}
             <QRContainer
               id={incrementId()}
               containerOptions={{
@@ -192,6 +212,7 @@ function App() {
               }
               checkBoxLeft={incrementCheckBox()}
             />
+            {/** Periodic Puzzle 8 */}
             <QRContainer
               id={incrementId()}
               containerOptions={{
@@ -208,6 +229,7 @@ function App() {
               ]}
               checkBoxLeft={incrementCheckBox()}
             />
+            {/** Duck Puzzle 9 */}
             <QRContainer
               id={incrementId()}
               containerOptions={{
@@ -221,26 +243,58 @@ function App() {
               solution={[0, 1, 0, 1, 1, 1, 0, 1, 0, 1, 1, 1, 0, 1, 0, 0, 1, 1]}
               checkBoxLeft={incrementCheckBox()}
             />
+            {/** Cryptex puzzle 10 */}
+            <QRContainer
+              id={incrementId()}
+              containerOptions={{
+                cellWidth: cellWidth,
+                cellHeight: cellHeight,
+                cellAmountHeight: 4,
+                cellAmountWidth: 6,
+                containerLeft: 538,
+                containerTop: 602,
+              }}
+              solution={[1,1,1,1,0,1,1,1,1,0,1,1,1,1,1,1,0,0,1,0,0,0,1,0]}
+              checkBoxLeft={incrementCheckBox()}
+            />
           </div>
         </div>
       </>
     );
 
+    const colorFace = (
+      <div>
+        <ColorPuzzleContainer
+          id={0}
+          containerOptions={{
+            cellWidth: cellWidth+32,
+            cellHeight: cellHeight+30,
+            cellAmountHeight: 8,
+            cellAmountWidth: 11,
+            containerLeft: 10,
+            containerTop: 40,
+          }}
+          checkBoxLeft={0}
+        />
+      </div>
+    );
+
     return (
       <>
       <div style={{ width: "1000px", height: "660px", display:'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center'}}>
+        <puzzleContext.Provider value={context}>
         <RotateCubeContainer
           frontFace={qrFace}
           leftFace={<DialPuzzleContainer />}
           rightFace={tileFace}
-          backFace={<div></div>}
+          backFace={<div>{colorFace}</div>}
         />
         <button onClick={() => localStorage.clear()} style={{...buttonStyle.black}}>Clear all sections</button>
+        </puzzleContext.Provider>
       </div>
-      
       </>
     );
-  }, []);
+  }, [checkBoxWidth, context]);
 
   return <>{ui}</>;
 }
