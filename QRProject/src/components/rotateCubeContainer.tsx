@@ -74,7 +74,7 @@ export default function RotateCubeContainer({
             justifyContent: "space-evenly",
           }}
         >
-          {solved["puzzle2"] && (
+          {Object.values(solved).filter(x => x).length >= 3 && (
             <div
               style={{
                 display: "flex",
@@ -92,7 +92,7 @@ export default function RotateCubeContainer({
                   ...buttonStyle.black,
                 }}
               >
-                RotateLeft
+                Left
               </button>
               {/*<button
 							onClick={() => rotateUp()}
@@ -126,7 +126,7 @@ export default function RotateCubeContainer({
               </div>
             </div>
           </div>
-          {(
+          {(Object.values(solved).filter(x => x).length >= 3 &&
             <div
               style={{
                 display: "flex",
@@ -143,7 +143,7 @@ export default function RotateCubeContainer({
                   ...buttonStyle.black,
                 }}
               >
-                RotateRight
+                Right
               </button>
               {/*<button
 							onClick={() => rotateDown()}

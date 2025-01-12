@@ -10,6 +10,7 @@ export interface qrProps {
     containerOptions: ContainerOptions,
     solution?: number[],
     hiddenDivHandling?: ReactNode,
+    finalPuzzle?: boolean,
     id: number,
     tilePuzzle?: boolean,
     checkBoxLeft: number,
@@ -40,13 +41,14 @@ export interface cellOptions {
     setCanInteract: Dispatch<SetStateAction<boolean>>
 }
 
-export default function QRContainer({containerOptions, solution, hiddenDivHandling, id, tilePuzzle=false, checkBoxLeft}: qrProps): ReactElement<PropsWithChildren> {
+export default function QRContainer({containerOptions, solution, hiddenDivHandling, id, tilePuzzle=false, checkBoxLeft, finalPuzzle=false}: qrProps): ReactElement<PropsWithChildren> {
 
     const storageName: string = `qrContainer${id}`
     //const [saveToggle]: [boolean, Dispatch<SetStateAction<boolean>>] = useState(false)
     const [cellList, setCellList]: [cellType[], Dispatch<SetStateAction<cellType[]>>] = useState<cellType[]>(localStorage.getItem(storageName) ? JSON.parse(localStorage.getItem(`qrContainer${id}`) || "") : [])
     //const [cellListPrintable, setCellListPrintable]: [number[], Dispatch<SetStateAction<number[]>>] = useState<number[]>([]);
     const [canInteract, setCanInteract]: [boolean, Dispatch<SetStateAction<boolean>>] = useState(true)
+    const [finished, setFinished]: [boolean, Dispatch<SetStateAction<boolean>>] = useState(false)
     const {solved, setSolved} = useContext(puzzleContext);
 
     useEffect(() => {
@@ -55,7 +57,13 @@ export default function QRContainer({containerOptions, solution, hiddenDivHandli
                 [`puzzle${id}`]: true})
             console.log(localStorage.getItem(storageName))
         }
-    }, [canInteract, solved, id])
+        if (finalPuzzle) {
+            for (const puzzle in solved) {
+                if (!solved[puzzle as keyof solvedList]) break;
+            }
+            if (Object.values(solved).filter(x => x).length >= Object.values(solved).length) setFinished(true);
+        }
+    }, [canInteract, solved, id, finalPuzzle, storageName])
 
     useEffect(() => {
     const tempList: cellType[]  = [];
@@ -84,7 +92,7 @@ export default function QRContainer({containerOptions, solution, hiddenDivHandli
             <>
             {<div style={{position: 'absolute', display:'flex', alignItems:'center', backgroundColor: 'white', justifyContent: 'center', top: -28, left: checkBoxLeft, width: 20, height: 20, border: `2px solid ${canInteract ? 'red' : 'green'}`, color: `${canInteract ? 'red' : 'green'}`, fontSize: 20, fontWeight: 'bold'}}>{id}</div>}
             <div>
-                {canInteract && hiddenDivHandling}
+                {!finalPuzzle ? canInteract && hiddenDivHandling : !finished && hiddenDivHandling}
                 <div style={{display: 'flex', flexWrap: 'wrap', alignItems: 'flex-start', flexDirection: 'row', width: containerOptions.cellWidth*containerOptions.cellAmountWidth, 
                             height: 'auto', border: `4px solid ${canInteract ? 'red' : 'green'}`, margin: '-1px', position: 'absolute', left: containerOptions.containerLeft, top: (containerOptions.containerTop || 0)-25, zIndex: 10
                 }}>
@@ -120,7 +128,7 @@ export default function QRContainer({containerOptions, solution, hiddenDivHandli
             </div>*/}
             </>
         )
-    }, [checkBoxLeft, canInteract, id, hiddenDivHandling, containerOptions.cellWidth, containerOptions.cellAmountWidth, containerOptions.containerLeft, containerOptions.containerTop, containerOptions.cellHeight, cellList, tilePuzzle, solution, storageName])
+    }, [checkBoxLeft, canInteract, id, finalPuzzle, hiddenDivHandling, finished, containerOptions.cellWidth, containerOptions.cellAmountWidth, containerOptions.containerLeft, containerOptions.containerTop, containerOptions.cellHeight, cellList, tilePuzzle, solution, storageName])
     return (
     <>{QRui}</>
     )

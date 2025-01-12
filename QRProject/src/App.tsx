@@ -22,10 +22,11 @@ export interface solvedList {
   puzzle7: boolean,
   puzzle8: boolean,
   puzzle9: boolean,
+  puzzle10: boolean,
 }
 
 function App() {
-  const [solved, setSolved]: [solvedList, Dispatch<SetStateAction<solvedList>>]  = useState<solvedList>({puzzle1:false,puzzle2:false,puzzle3:false,puzzle4:false,puzzle5:false,puzzle6:false,puzzle7:false,puzzle8:false,puzzle9:false})
+  const [solved, setSolved]: [solvedList, Dispatch<SetStateAction<solvedList>>]  = useState<solvedList>({puzzle1:false,puzzle2:false,puzzle3:false,puzzle4:false,puzzle5:false,puzzle6:false,puzzle7:false,puzzle8:false,puzzle9:false, puzzle10:false})
   const context = useMemo(() => ({solved, setSolved}), [solved]);
 
   const ui = useMemo(() => {
@@ -94,6 +95,17 @@ function App() {
                 containerLeft: 398,
                 containerTop: 242,
               }}
+              hiddenDivHandling={
+                <div
+                  style={{
+                    width: 160,
+                    height: 200,
+                    position: "absolute",
+                    backgroundColor: "white",
+                    top: 150,
+                    left: 490
+                  }}
+                ></div>}
               solution={[1, 0, 0, 1, 1, 1, 1, 1, 1, 0, 0, 1]}
               checkBoxLeft={checkBoxLoc}
             />
@@ -138,6 +150,17 @@ function App() {
                 containerLeft: -3,
                 containerTop: 264,
               }}
+              hiddenDivHandling={
+                <div
+                  style={{
+                    width: 210,
+                    height: 150,
+                    position: "absolute",
+                    backgroundColor: "white",
+                    top: 396,
+                    left: 200
+                  }}
+                ></div>}
               solution={[
                 0, 1, 0, 0, 1, 0, 1, 1, 0, 0, 0, 1, 0, 1, 0, 0, 0, 1, 1, 1, 1,
                 0, 1, 1, 1, 1, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 1, 1, 1, 0, 0,
@@ -184,6 +207,17 @@ function App() {
                 containerLeft: 198,
                 containerTop: 180,
               }}
+              hiddenDivHandling={
+                <div
+                  style={{
+                    width: 150,
+                    height: 150,
+                    position: "absolute",
+                    backgroundColor: "white",
+                    top: 0,
+                    left: 180
+                  }}
+                ></div>}
               solution={[0, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 0, 1, 0]}
               checkBoxLeft={incrementCheckBox()}
             />
@@ -206,10 +240,10 @@ function App() {
                     height: 150,
                     position: "absolute",
                     backgroundColor: "white",
-                    top: 520,
+                    top: 220,
+                    left: 300
                   }}
-                ></div>
-              }
+                ></div>}
               checkBoxLeft={incrementCheckBox()}
             />
             {/** Periodic Puzzle 8 */}
@@ -223,6 +257,17 @@ function App() {
                 containerLeft: 276,
                 containerTop: 482,
               }}
+              hiddenDivHandling={
+                <div
+                  style={{
+                    width: 190,
+                    height: 150,
+                    position: "absolute",
+                    backgroundColor: "white",
+                    top: 520,
+                    left: 370
+                  }}
+                ></div>}
               solution={[
                 0, 0, 0, 0, 1, 0, 1, 1, 0, 0, 1, 1, 0, 0, 1, 0, 1, 1, 0, 1, 1,
                 1, 0, 0, 0, 0, 0, 0, 0, 1,
@@ -240,6 +285,17 @@ function App() {
                 containerLeft: 178,
                 containerTop: 544,
               }}
+              hiddenDivHandling={
+                <div
+                  style={{
+                    width: 290,
+                    height: 320,
+                    position: "absolute",
+                    backgroundColor: "white",
+                    top: 170,
+                    left: 0
+                  }}
+                ></div>}
               solution={[0, 1, 0, 1, 1, 1, 0, 1, 0, 1, 1, 1, 0, 1, 0, 0, 1, 1]}
               checkBoxLeft={incrementCheckBox()}
             />
@@ -254,6 +310,18 @@ function App() {
                 containerLeft: 538,
                 containerTop: 602,
               }}
+              hiddenDivHandling={
+                <div
+                  style={{
+                    width: 150,
+                    height: 150,
+                    position: "absolute",
+                    backgroundColor: "white",
+                    top: 520,
+                  }}
+                ></div>
+              }
+              finalPuzzle
               solution={[1,1,1,1,0,1,1,1,1,0,1,1,1,1,1,1,0,0,1,0,0,0,1,0]}
               checkBoxLeft={incrementCheckBox()}
             />
