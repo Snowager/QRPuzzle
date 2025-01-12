@@ -196,7 +196,7 @@ function App() {
               solution={[0, 1, 0, 0, 1, 0, 0, 0, 0, 1, 1, 0, 1, 1, 0]}
               checkBoxLeft={incrementCheckBox()}
             />
-            {/** F shape Puzzle 6 */}
+            {/** F shape Puzzle 6 Books*/}
             <QRContainer
               id={incrementId()}
               containerOptions={{

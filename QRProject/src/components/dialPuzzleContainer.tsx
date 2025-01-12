@@ -31,7 +31,7 @@ export default function DialPuzzleContainer() {
     const ui = useMemo(() => {return (
         <>
         <div style={{...styles.container}}>
-            {dialList && dialList.map((dial: ReactNode) => {
+            {dialList.length > 1 && dialList.map((dial: ReactNode) => {
                 return (
                     <>{dial}</> 
                 )
