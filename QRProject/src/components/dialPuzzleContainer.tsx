@@ -13,7 +13,7 @@ export interface letterBox {
 
 export default function DialPuzzleContainer() {
 
-    const [dialList, setDialList]: [ReactElement[], Dispatch<SetStateAction<ReactElement[]>>] = useState(null);
+    const [dialList, setDialList]: [ReactElement[], Dispatch<SetStateAction<ReactElement[]>>] = useState([<LetterDial dialBox={[]}></LetterDial>]);
     useEffect(() => {
         const list: ReactElement[] = [
         ]
