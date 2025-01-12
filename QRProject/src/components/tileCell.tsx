@@ -49,13 +49,13 @@ export default function TileCell({
 
   const cellUi = useMemo(() => {
     const handleClick = (): void => {
-      setTileIndex((value) => (value === styleArr.length - 1 ? 0 : value + 1));
+      setTileIndex((value) => (value === styleArr.length - 2 ? 0 : value + 1));
     };
 
     return (
       <div
         style={{ width: cellWidth, height: cellHeight, ...styleArr[tileIndex]}}
-        className={(colorTile && tileIndex==4) ? "noiseColor" : tileIndex===2 ? "noiseBlocker" : ""}
+        className={(colorTile && tileIndex==4) ? "noiseColor" : colorTile && tileIndex===2 ? "noiseBlocker" : ""}
         onClick={() => {
           if (cellHandling.canInteract) handleClick();
         }}
