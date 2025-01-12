@@ -1,6 +1,7 @@
 import { useState, useMemo, useEffect, Dispatch, SetStateAction } from "react";
 import { cellType } from "./qrContainer";
 import "../styles/reveal.css"
+import { QRCellProps } from "./qrCell";
 
 export default function TileCell({
   cellWidth,
@@ -8,7 +9,7 @@ export default function TileCell({
   cellHandling,
   cell,
   storageName = "",
-  colorTile = false}) {
+  colorTile = false}: QRCellProps) {
   const [tileIndex, setTileIndex]: [number, Dispatch<SetStateAction<number>>] =
     useState(cell.value);
 
@@ -31,7 +32,7 @@ export default function TileCell({
     ];
 
   useEffect(() => {
-    const stringList = cellHandling.cellList.map((cell: { value: never; }) => cell.value);
+    const stringList = cellHandling.cellList.map((cell) => cell.value);
     if (JSON.stringify(stringList) === JSON.stringify(cellHandling.solution)) {
       cellHandling.setCanInteract(false);
     }

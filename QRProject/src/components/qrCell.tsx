@@ -8,6 +8,7 @@ export interface QRCellProps {
     cellHandling: cellOptions,
     cell: cellType,
     storageName?: string
+    colorTile?: boolean
 }
 
 export default function QRCell({toggleState, cellWidth, cellHeight, cellHandling, cell, storageName}: QRCellProps) {

@@ -111,7 +111,7 @@ export default function ColorPuzzleContainer({
             border: `4px solid ${canInteract ? "red" : "green"}`,
             margin: "-1px",
             position: "absolute",
-            left: containerOptions.containerLeft+30,
+            left: (containerOptions.containerLeft || 0) +30 ,
             top: (containerOptions.containerTop || 0) + 80,
           }}
         >
